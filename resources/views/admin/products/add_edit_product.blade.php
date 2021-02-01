@@ -164,7 +164,7 @@
                         <select name="brand" id="brand" class="form-control select2" style="width: 100%;">
                           <option value="">Select</option>
                           @foreach ($brandArray as $brand)
-                            <option value="{{ $brand }}">{{ $brand }}</option>
+                            <option value="{{ $brand }}" @if(!empty($productdata['brand']) && $productdata['brand']==$brand ) selected="" @endif>{{ $brand }}</option>
                           @endforeach
                         </select>
                     </div>
@@ -173,7 +173,7 @@
                         <select name="quality" id="quality" class="form-control select2" style="width: 100%;">
                           <option value="">Select</option>
                           @foreach ($qualityArray as $quality)
-                            <option value="{{ $quality }}">{{ $quality }}</option>
+                            <option value="{{ $quality }}" @if(!empty($productdata['quality']) && $productdata['quality']==$quality ) selected="" @endif>{{ $quality }}</option>
                           @endforeach
                         </select>
                     </div>
@@ -182,7 +182,7 @@
                         <select name="warrenty" id="warrenty" class="form-control select2" style="width: 100%;">
                           <option value="">Select</option>
                           @foreach ($warrentyArray as $warrenty)
-                            <option value="{{ $warrenty }}">{{ $warrenty }}</option>
+                            <option value="{{ $warrenty }}" @if(!empty($productdata['warrenty']) && $productdata['warrenty']==$warrenty ) selected="" @endif>{{ $warrenty }}</option>
                           @endforeach
                         </select>
                     </div>
@@ -194,7 +194,7 @@
                     </div>
                     <div class="form-group">
                         <label for="product_name">Featured Item</label>
-                        <input type="checkbox" name="is_featured" id="is_featured" value="Yes">
+                        <input type="checkbox" name="is_featured" id="is_featured" value="Yes" @if(!empty($productdata['is_featured']) && $productdata['is_featured']=="Yes") checked="" @endif>
                     </div>
                   </div>
             </div>

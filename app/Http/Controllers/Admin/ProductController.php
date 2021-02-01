@@ -57,11 +57,14 @@ class ProductController extends Controller
             $title='Add Product';
             $product = new Product;
             $productdata = array();
+            $message = "product added Successfully";
         }else{
             $title="edit Product";
             $productdata = Product::find($id);
             $productdata = json_decode(json_encode($productdata),true);
             // echo "<pre>"; print_r($productdata); die;
+            $product = Product::find($id);
+            $message = "product updated Successfully";
         }
 
         if($request->isMethod('post')){
@@ -172,7 +175,7 @@ class ProductController extends Controller
                 $product->is_featured = $is_featured;
                 $product->status = 1;
                 $product->save();
-                $request->session()->flash('success', 'Products Added Successfully!');
+                $request->session()->flash('success_message', $message);
                 return redirect('admin/products');
                 }
 
