@@ -67,10 +67,10 @@
                             @foreach ($categories as $section)
                                 <optgroup label="{{ $section['name'] }}"></optgroup>
                                 @foreach ($section['categories'] as $category)
-                                    <option value="{{ $category['id'] }}" @if(!empty(@old('category_id')) && $category['id']==old('category_id')) selected=""@endif>
+                                    <option value="{{ $category['id'] }}" @if(!empty(@old('category_id')) && $category['id']==old('category_id')) selected="" @elseif(!empty($productdata['category_id']) && $productdata['category_id']==$category['id']) selected=""@endif>
                                         &nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{ $category['category_name'] }}</option>
                                     @foreach ($category['subcategories'] as $subcategory)
-                                        <option value="{{ $subcategory['id'] }}"@if(!empty(@old('category_id')) && $subcategory['id']==old('category_id')) selected=""@endif>
+                                        <option value="{{ $subcategory['id'] }}"@if(!empty(@old('category_id')) && $subcategory['id']==old('category_id')) selected=""@elseif(!empty($productdata['category_id']) && $productdata['category_id']==$subcategory['id']) selected=""@endif>>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $subcategory['category_name'] }}</option>
                                     @endforeach
                                 @endforeach
