@@ -9,6 +9,7 @@ use App\Product;
 use Illuminate\Http\Request;
 
 use Session;
+use Image;
 
 
 class ProductController extends Controller
@@ -105,6 +106,46 @@ class ProductController extends Controller
             $data['description']="";
         }
 
+        // upload Product Main Image
+        if($request->hasFile('main_image')){
+            $image_tmp = $request->file('main_image');
+            if($image_tmp->isValid()){
+                //get original image name
+                $image_name=$image_tmp->getClientOriginalName();
+                //get image extension
+                $extension =$image_tmp->getClientOriginalExtension();
+                //generate new image
+                $imageName = $image_name.'-'.rand(111,99999).'.'.$extension;
+                //set paths for small,meduim and large images
+                $large_image_path = 'images/product_images/large/'.$imageName;
+                $medium_image_path = 'images/product_images/medium/'.$imageName;
+                $small_image_path = 'images/product_images/small/'.$imageName;
+                Image::make($image_tmp)->save($large_image_path); //W-1040 H-1200
+                //upload image after resize
+                Image::make($image_tmp)->resize(600,480)->save($medium_image_path);
+                Image::make($image_tmp)->resize(300,240)->save($small_image_path);
+                //save image in products table
+                $product->main_image = $imageName;
+            }
+        }
+
+        //upload Product Video
+        if($request->hasFile('product_video')){
+            $video_tmp=$request->file('product_video');
+                if($video_tmp->isValid()){
+                    //upload video
+                    $video_name = $video_tmp->getClientOriginalName();
+                    $extension = $video_tmp->getClientOriginalExtension();
+                    $videoName= $video_name.'-'.rand().'.'.$extension;
+                    $video_path = 'videos/product_videos/';
+                    $video_tmp->move($video_path,$videoName);
+                    //save video in products table
+                    $product->product_video = $videoName;
+                }
+
+
+
+        }
 
         //Save Product Details in Products table
         $categoryDetails = Category::find($data['category_id']);

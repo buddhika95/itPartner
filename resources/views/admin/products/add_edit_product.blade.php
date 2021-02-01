@@ -113,14 +113,14 @@
                       <label for="main_image">Product Main Image</label>
                       <div class="input-group">
                         <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="main_image" name="main_image">
+                          <input type="file" class="custom-file-input" name="main_image" id="main_image" >
                           <label class="custom-file-label" for="main_image">Choose file</label>
                         </div>
                         <div class="input-group-append">
                           <span class="input-group-text" id="">Upload</span>
                         </div>
                       </div>
-
+                        <div>Recommended Image Size : Width:1040px, Height:1200px</div>
                   </div>
                 </div>
               </div>
