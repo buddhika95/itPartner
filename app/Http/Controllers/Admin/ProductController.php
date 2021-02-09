@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Section;
 use App\Category;
 use App\Product;
+use App\ProductsAttribute;
 use Illuminate\Http\Request;
 
 use Session;
@@ -195,6 +196,107 @@ class ProductController extends Controller
         // echo "<pre>"; print_r($categories); die;
 
         return view('admin.products.add_edit_product')->with(compact('title','brandArray','qualityArray','warrentyArray','categories','productdata'));
+    }
+
+    public function deleteProductImage($id)
+    {
+        //get the product image that we want to dlete
+        $productImage = Product::select('main_image')->where('id',$id)->first();
+
+        //product Image path
+        $small_image_path = 'images/product_images/small/';
+        $medium_image_path = 'images/product_images/medium/';
+        $large_image_path = 'images/product_images/large/';
+
+        //delete product small image from product_images folder if exists
+        if(file_exists($small_image_path.$productImage->main_image)){
+            unlink($small_image_path. $productImage->main_image);
+        }
+
+         //delete product medium image from product_images folder if exists
+         if(file_exists($medium_image_path.$productImage->main_image)){
+            unlink($medium_image_path. $productImage->main_image);
+        }
+         //delete product large image from product_images folder if exists
+         if(file_exists($large_image_path.$productImage->main_image)){
+            unlink($large_image_path. $productImage->main_image);
+        }
+        //delete product image in databse
+        Product::where('id',$id)->update(['main_image'=>'']);
+        $message = "Product image has been deleted successfully.!";
+        session()->flash('success_message', $message);
+        return redirect()->back();
+    }
+
+    public function deleteProductVideo($id)
+    {
+        //get the product video
+        $productVideo = Product::select('product_video')->where('id',$id)->first();
+
+        //product videopath
+        $video_path = 'videos/product_videos/';
+
+
+        //delete product small image from product_images folder if exists
+        if(file_exists($video_path .$productVideo->product_video)){
+            unlink($video_path . $productVideo->product_video);
+        }
+
+
+
+        //delete product image in databse
+        Product::where('id',$id)->update(['product_video'=>'']);
+        $message = "Product Video has been deleted successfully.!";
+        session()->flash('success_message', $message);
+        return redirect()->back();
+    }
+
+    public function addAttributes(Request $request,$id)
+    {
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+            foreach ($data['sku'] as $key => $value){
+                 if(!empty($value)){
+
+                    //sku already exists check
+                    $attrCountSKU = ProductsAttribute::where('sku',$value)->count();
+                    if($attrCountSKU>0){
+                        $message= 'SKU already exists. Please add another SKU!';
+                        $request->session()->flash('error_message', $message);
+                        return redirect()->back();
+                    }
+                    //type already exists check
+                    $attrCountType = ProductsAttribute::where(['product_id'=>$id,'type'=>$data['type'][$key]])->count();
+                    if($attrCountType>0){
+                        $message= 'TYPE already exists. Please add another Type!';
+                        $request->session()->flash('error_message', $message);
+                        return redirect()->back();
+                    }
+
+                    $attribute = new ProductsAttribute;
+                    $attribute->product_id = $id;
+                    $attribute->sku = $value;
+                    $attribute->type = $data['type'][$key];
+                    $attribute->price = $data['price'][$key];
+                    $attribute->stock = $data['stock'][$key];
+                    $attribute->status=1;
+                    $attribute->save();
+
+                 }
+            }
+            $message= 'Product Attributes has been added Successfully!';
+            $request->session()->flash('success_message', $message);
+        }
+        //get data from attribiutes and product relationship
+        $productdata= Product::select('id','product_name','product_code','product_color','product_price','main_image')->with('attributes')->find($id);
+        $productdata = json_decode(json_encode($productdata),true);
+        // echo "<pre>"; print_r($productdata); die;
+
+
+
+        $title ="Product Attributes";
+        return view('admin.products.add_attributes')->with(compact('productdata','title'));
     }
 
 }

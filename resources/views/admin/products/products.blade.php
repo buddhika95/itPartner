@@ -85,9 +85,11 @@
                                         href="javascript:void(0)"> Inactive</a>
                                 @endif
                             </td>
-                            <td><a href="{{url('admin/add-edit-product/'.$product->id)}}" class="btn btn-primary">Edit</a>
+                            <td><a title="Add Attributes" href="{{url('admin/add-attributes/'.$product->id)}}" class="btn btn-primary"><i class="fas fa-plus"></i> </a>
                                 &nbsp;&nbsp;
-                                <a href="javascript:void(0)" class="confirmDelete btn btn-danger"  record="product" recordid="{{ $product->id}}" <?php /*href="{{url('admin/delete-product/'.$product->id)}}" */?> >Delete</a>
+                                <a title="Edit Product" href="{{url('admin/add-edit-product/'.$product->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                &nbsp;&nbsp;
+                                <a title="Delete Product" href="javascript:void(0)" class="confirmDelete btn btn-danger"  record="product" recordid="{{ $product->id}}" <?php /*href="{{url('admin/delete-product/'.$product->id)}}" */?> ><i class="fas fa-trash"></i></a>
                             </td>
 
                         </tr>

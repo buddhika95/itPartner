@@ -120,7 +120,14 @@
                           <span class="input-group-text" id="">Upload</span>
                         </div>
                       </div>
-                        <div>Recommended Image Size : Width:1040px, Height:1200px</div>
+                      <div>Recommended Image Size : Width:1040px, Height:1200px</div>
+                        @if(!empty($productdata['main_image']))
+                            <div> <img style="width:80px; margin-top:5px;" src="{{ asset('images/product_images/small/'.$productdata['main_image']) }}">
+                                    &nbsp;
+                                    <a class="confirmDelete" href="javascript:void(0)" record="product-image" recordid="{{$productdata['id']}}" >Delete Image </a>
+                            </div>
+                        @endif
+
                   </div>
                 </div>
               </div>
@@ -136,10 +143,14 @@
                           <div class="input-group-append">
                             <span class="input-group-text" id="">Upload</span>
                           </div>
+
                         </div>
-
+                        @if(!empty($productdata['product_video']))
+                        <div><a href="{{ url('videos/product_videos/'.$productdata['product_video']) }}" download>Download</a>&nbsp;|&nbsp;
+                            <a class="confirmDelete" href="javascript:void(0)" record="product-video" recordid="{{$productdata['id']}}" >Delete video </a>
+                        </div>
+                        @endif
                     </div>
-
                   <div class="form-group">
                       <label for="product_description">
                           product Description</label>
