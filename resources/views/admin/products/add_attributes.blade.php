@@ -56,7 +56,7 @@
             </button>
             </div>
         @endif
-        <form name="attributeForm" id="attributeForm"  method="post" action="{{ url('admin/add-attributes/'.$productdata['id']) }}">@csrf
+        <form name="addAttributeForm" id="addAttributeForm"  method="post" action="{{ url('admin/add-attributes/'.$productdata['id']) }}">@csrf
 
           <div class="card card-default">
             <div class="card-header">
@@ -108,10 +108,60 @@
             </div>
 
             <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Add Attributes</button>
             </div>
           </div>
         </form>
+
+        <form name="editAttributeForm" id="editAttributeForm" method="post" action="{{ url('admin/edit-attributes/'.$productdata['id']) }}">@csrf
+
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Added Product Attributes</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="products" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>SKU</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($productdata['attributes'] as $attribute)
+                    <input style="display: none;" type="text" name="attrId[]" value="{{ $attribute['id'] }}">
+                        <tr>
+                            <td>{{ $attribute['id'] }}</td>
+                            <td>{{ $attribute['type'] }}</td>
+                            <td>{{ $attribute['sku'] }}</td>
+                            <td>
+                                <input type="number" name="price[]" value="{{ $attribute['price'] }}" required>
+                            </td>
+                            <td>
+                                <input type="number" name="stock[]" value="{{ $attribute['stock']}}" required>
+                            </td>
+
+                            <td> </td>
+
+                    @endforeach
+                    </tbody>
+                </table>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Update Attributes</button>
+                </div>
+            </div>
+        </form>
+        <!-- /.card -->
+
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
