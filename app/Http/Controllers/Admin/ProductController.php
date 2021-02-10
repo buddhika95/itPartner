@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Section;
 use App\Category;
 use App\Product;
+use App\Brand;
 use App\ProductsAttribute;
 use App\ProductsImage;
 use Illuminate\Http\Request;
@@ -76,6 +77,7 @@ class ProductController extends Controller
 
                 $rules = [
                 'category_id'=>'required',
+                'brand_id'=>'required',
                 'product_name'=>'required|regex:/^[\pL\s\-]+$/u',
                 'product_code'=>'required|regex:/^[\w-]*$/',
                 'product_price'=>'required|numeric',
@@ -156,6 +158,7 @@ class ProductController extends Controller
                 // echo "<pre>";print_r($categoryDetails); die;
                 $product->section_id = $categoryDetails['section_id'];
                 $product->category_id =$data['category_id'];
+                $product->brand_id =$data['brand_id'];
                 $product->product_name  =$data['product_name'];
                 $product->product_code =$data['product_code'];
                 $product->product_color =$data['product_color'];
@@ -163,7 +166,7 @@ class ProductController extends Controller
                 $product->product_discount =$data['product_discount'];
                 $product->product_weight =$data['product_weight'];
                 $product->description =$data['description'];
-                $product->brand =$data['brand'];
+                // $product->brand =$data['brand'];
                 $product->quality =$data['quality'];
                 $product->warrenty =$data['warrenty'];
                 $product->meta_title  =$data['meta_title'];
@@ -186,7 +189,7 @@ class ProductController extends Controller
 
 
         //filter Arrays
-        $brandArray = array('HP','Asus','Dell');
+
         $qualityArray = array('Brandard','Grade A','Grade B');
         $warrentyArray = array('6 Months','1 Year','3 Year');
 
@@ -195,7 +198,11 @@ class ProductController extends Controller
         $categories = json_decode(json_encode($categories),true);
         // echo "<pre>"; print_r($categories); die;
 
-        return view('admin.products.add_edit_product')->with(compact('title','brandArray','qualityArray','warrentyArray','categories','productdata'));
+        //get All Brands
+        $brands = Brand::where('status',1)->get();
+        $brands =json_decode(json_encode($brands),true);
+
+        return view('admin.products.add_edit_product')->with(compact('title','qualityArray','warrentyArray','categories','productdata','brands'));
     }
 
     public function deleteProductImage($id)

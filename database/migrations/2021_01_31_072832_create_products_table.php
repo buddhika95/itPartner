@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration
             $table->string('product_video');
             $table->string('main_image');
             $table->text('description');
-            $table->string('brand');
+            // $table->string('brand');
             $table->string('quality');
             $table->string('warrenty');
             $table->string('meta_title');

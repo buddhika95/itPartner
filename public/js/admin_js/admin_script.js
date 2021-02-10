@@ -18,7 +18,7 @@
   });
  });
 
-//update category Status
+//update section Status
  $(".updateSectionStatus").click(function(){
     var status=$(this).text();
     var section_id =$(this).attr("section_id");
@@ -31,6 +31,28 @@
                 $("#section-"+section_id).html("<a class='updateSectionStatus' href='javascript:void(0)'> InActive</a>");
             }else if(resp['status']==1){
                 $("#section-"+section_id).html("<a class='updateSectionStatus' href='javascript:void(0)'> Active</a>");
+            }
+
+        },error:function(){
+            alert("Error");
+        }
+    });
+});
+
+//update Brand Status
+$(".updateBrandStatus").click(function(){
+    var status=$(this).children("i").attr("status");
+
+    var brand_id =$(this).attr("brand_id");
+    $.ajax({
+        type:'post',
+        url:'/admin/update-brand-status',
+        data:{status:status,brand_id:brand_id},
+        success:function(resp){
+            if(resp['status']==0){
+                $("#brand-"+brand_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
+            }else if(resp['status']==1){
+                $("#brand-"+brand_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
             }
 
         },error:function(){
