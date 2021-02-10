@@ -125,9 +125,30 @@ $(".updateProductStatus").click(function(){
         data:{status:status,product_id:product_id},
         success:function(resp){
             if(resp['status']==0){
-                $("#product-"+section_id).html("<a class='updateProductStatus' href='javascript:void(0)'> InActive</a>");
+                $("#product-"+product_id).html("<a class='updateProductStatus' href='javascript:void(0)'> InActive</a>");
             }else if(resp['status']==1){
                 $("#product-"+product_id).html("<a class='updateProductStatus' href='javascript:void(0)'> Active</a>");
+            }
+
+        },error:function(){
+            alert("Error");
+        }
+    });
+});
+
+//update attribute status
+$(".updateAttributeStatus").click(function(){
+    var status=$(this).text();
+    var attribute_id =$(this).attr("attribute_id");
+    $.ajax({
+        type:'post',
+        url:'/admin/update-attribute-status',
+        data:{status:status,attribute_id:attribute_id},
+        success:function(resp){
+            if(resp['status']==0){
+                $("#attribute-"+attribute_id).html("InActive");
+            }else if(resp['status']==1){
+                $("#attribute-"+attribute_id).html("Active");
             }
 
         },error:function(){

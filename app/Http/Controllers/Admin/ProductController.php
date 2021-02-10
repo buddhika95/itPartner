@@ -316,4 +316,29 @@ class ProductController extends Controller
         }
     }
 
+
+    public function updateAttributeStatus(Request $request)
+    {
+       if($request->ajax()){
+           $data=$request->all();
+        //    echo "<pre>"; print_r($data); die;
+        if($data['status']=="Active"){
+            $status=0;
+        }else{
+            $status=1;
+        }
+        ProductsAttribute::where('id',$data['attribute_id'])->update(['status'=>$status]);
+        return response()->json(['status'=>$status,'attribute_id'=>$data['attribute_id']]);
+       }
+    }
+
+    public function deleteAttribute($id)
+    {
+        //delete Product
+        ProductsAttribute::where('id',$id)->delete();
+        $message = "Product Attribute has been deleted successfully.!";
+        session()->flash('success_message', $message);
+        return redirect()->back();
+    }
+
 }
