@@ -157,6 +157,27 @@ $(".updateAttributeStatus").click(function(){
     });
 });
 
+//update Image status
+$(".updateImageStatus").click(function(){
+    var status=$(this).text();
+    var image_id =$(this).attr("image_id");
+    $.ajax({
+        type:'post',
+        url:'/admin/update-image-status',
+        data:{status:status,image_id:image_id},
+        success:function(resp){
+            if(resp['status']==0){
+                $("#image-"+image_id).html("InActive");
+            }else if(resp['status']==1){
+                $("#image-"+image_id).html("Active");
+            }
+
+        },error:function(){
+            alert("Error");
+        }
+    });
+});
+
 // products Attributes add/remove script
     var maxField = 10; //Input fields increment limitation
     var addButton = $('.add_button'); //Add button selector

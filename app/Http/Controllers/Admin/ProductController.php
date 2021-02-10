@@ -7,6 +7,7 @@ use App\Section;
 use App\Category;
 use App\Product;
 use App\ProductsAttribute;
+use App\ProductsImage;
 use Illuminate\Http\Request;
 
 use Session;
@@ -97,11 +98,6 @@ class ProductController extends Controller
                 ];
                 $this->validate($request,$rules,$customMessages);
 
-                if(empty($data['is_featured'])){
-                    $is_featured = "No";
-                }else{
-                    $is_featured  = "Yes";
-                }
 
                 // echo $is_featured; die;
                 if(empty($data['product_discount'])){
@@ -173,7 +169,11 @@ class ProductController extends Controller
                 $product->meta_title  =$data['meta_title'];
                 $product->meta_description =$data['meta_description'];
                 $product->meta_keywords =$data['meta_keywords'];
-                $product->is_featured = $is_featured;
+                if(!empty($data['is_featured'])){
+                    $product->is_featured=$data['is_featured'];
+                }
+
+
                 $product->status = 1;
                 $product->save();
                 $request->session()->flash('success_message', $message);
@@ -332,6 +332,21 @@ class ProductController extends Controller
        }
     }
 
+    public function updateImageStatus(Request $request)
+    {
+       if($request->ajax()){
+           $data=$request->all();
+        //    echo "<pre>"; print_r($data); die;
+        if($data['status']=="Active"){
+            $status=0;
+        }else{
+            $status=1;
+        }
+        ProductsAttribute::where('id',$data['image_id'])->update(['status'=>$status]);
+        return response()->json(['status'=>$status,'image_id'=>$data['image_id']]);
+       }
+    }
+
     public function deleteAttribute($id)
     {
         //delete Product
@@ -340,5 +355,77 @@ class ProductController extends Controller
         session()->flash('success_message', $message);
         return redirect()->back();
     }
+
+    public function addImages(Request $request, $id)
+    {
+        if($request->isMethod('post')){
+            // $data = $request->all();
+            // echo "<pre>"; print_r($data); die; // for testing
+            if($request->hasFile('images')){
+                $images = $request->file('images');
+                // echo "<pre>"; print_r($images); die;
+                foreach ($images as $key=>$image) {
+                    $productImage= new ProductsImage();
+                    $image_tmp=Image::make($image);
+                    $extension = $image->getClientOriginalExtension();
+                    $imageName=rand(111,999999).time().".".$extension;
+
+                    //set paths for small,meduim and large images
+                    $large_image_path = 'images/product_images/large/'.$imageName;
+                    $medium_image_path = 'images/product_images/medium/'.$imageName;
+                    $small_image_path = 'images/product_images/small/'.$imageName;
+                    Image::make($image_tmp)->save($large_image_path); //W-1040 H-1200
+                    //upload image after resize
+                    Image::make($image_tmp)->resize(600,450)->save($medium_image_path);
+                    Image::make($image_tmp)->resize(300,240)->save($small_image_path);
+                    //save image in products table
+                    $productImage->image = $imageName;
+                    $productImage->product_id=$id;
+                    $productImage->status = 1;
+                    $productImage->save();
+                }
+                $message = "Product Images have been added successfully.!";
+                session()->flash('success_message', $message);
+                return redirect()->back();
+            }
+        }
+
+        $productdata = Product::with('images')->select('id','product_name','product_code','product_color','product_price','main_image')->find($id);
+        $productdata= json_decode(json_encode($productdata),true);
+        // echo "<pre>"; print_r($productdata); die;
+        $title="Product Images";
+        return view('admin.products.add_images')->with(compact('title','productdata'));
+    }
+
+    public function deleteImage($id)
+    {
+        //get the product image that we want to dlete
+        $productImage = ProductsImage::select('image')->where('id',$id)->first();
+
+        //product Image path
+        $small_image_path = 'images/product_images/small/';
+        $medium_image_path = 'images/product_images/medium/';
+        $large_image_path = 'images/product_images/large/';
+
+        //delete product small image from product_images folder if exists
+        if(file_exists($small_image_path.$productImage->image)){
+            unlink($small_image_path. $productImage->image);
+        }
+
+         //delete product medium image from product_images folder if exists
+         if(file_exists($medium_image_path.$productImage->image)){
+            unlink($medium_image_path. $productImage->image);
+        }
+         //delete product large image from product_images folder if exists
+         if(file_exists($large_image_path.$productImage->image)){
+            unlink($large_image_path. $productImage->image);
+        }
+        //delete product image in products_images table
+        ProductsImage::where('id',$id)->delete();
+        $message = "Product image has been deleted successfully.!";
+        session()->flash('success_message', $message);
+        return redirect()->back();
+    }
+
 
 }
