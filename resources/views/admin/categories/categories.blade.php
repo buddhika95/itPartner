@@ -71,15 +71,15 @@
                             <td>
                                 @if($category->status==1)
                                 <a class="updateCategoryStatus" id="category-{{ $category->id}}" category_id="{{ $category->id}}"
-                                    href="javascript:void(0)"> Active</a>
+                                    href="javascript:void(0)"> <i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
                                 @else
                                     <a class="updateCategoryStatus" id="category-{{ $category->id}}" category_id="{{ $category->id}}"
-                                        href="javascript:void(0)"> Inactive</a>
+                                        href="javascript:void(0)"> <i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
                                 @endif
                             </td>
-                            <td><a href="{{url('admin/add-edit-category/'.$category->id)}}" class="btn btn-primary">Edit</a>
+                            <td><a href="{{url('admin/add-edit-category/'.$category->id)}}" ><i class="fas fa-edit"></i></a>
                                 &nbsp;&nbsp;
-                                <a href="javascript:void(0)" class="confirmDelete btn btn-danger"  record="category" recordid="{{ $category->id}}" <?php /*href="{{url('admin/delete-category/'.$category->id)}}" */?> >Delete</a>
+                                <a href="javascript:void(0)" class="confirmDelete"  record="category" recordid="{{ $category->id}}" <?php /*href="{{url('admin/delete-category/'.$category->id)}}" */?> ><i style="color:red" class="fas fa-trash"></i></a>
                             </td>
 
                         </tr>
