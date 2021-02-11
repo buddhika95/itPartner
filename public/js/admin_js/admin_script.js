@@ -19,7 +19,7 @@
  });
 
 //update section Status
- $(".updateSectionStatus").click(function(){
+$(document).on("click",".updateSectionStatus",function(){
     var status=$(this).children("i").attr("status");
     var section_id =$(this).attr("section_id");
     $.ajax({
@@ -40,7 +40,7 @@
 });
 
 //update Brand Status
-$(".updateBrandStatus").click(function(){
+$(document).on("click",".updateBrandStatus",function(){
     var status=$(this).children("i").attr("status");
 
     var brand_id =$(this).attr("brand_id");
@@ -62,7 +62,7 @@ $(".updateBrandStatus").click(function(){
 });
 
 //update category Status
-$(".updateCategoryStatus").click(function(){
+    $(document).on("click",".updateCategoryStatus",function(){
     var status=$(this).children("i").attr("status");
     var category_id =$(this).attr("category_id");
     $.ajax({
@@ -110,7 +110,7 @@ $('#section_id').change(function(){
 
 // });
 //confirm delete with sweet  alert
-$(".confirmDelete").click(function(){
+    $(document).on("click",".confirmDelete",function(){
     var record = $(this).attr("record");
     var recordid = $(this).attr("recordid");
 
@@ -138,7 +138,7 @@ $(".confirmDelete").click(function(){
 
 //Product jquerries
 //update product Status
-$(".updateProductStatus").click(function(){
+    $(document).on("click",".updateProductStatus",function(){
     var status=$(this).children("i").attr("status");
     var product_id =$(this).attr("product_id");
     $.ajax({
@@ -159,7 +159,7 @@ $(".updateProductStatus").click(function(){
 });
 
 //update attribute status
-$(".updateAttributeStatus").click(function(){
+$(document).on("click",".updateAttributeStatus",function(){
     var status=$(this).text();
     var attribute_id =$(this).attr("attribute_id");
     $.ajax({
@@ -180,7 +180,7 @@ $(".updateAttributeStatus").click(function(){
 });
 
 //update Image status
-$(".updateImageStatus").click(function(){
+$(document).on("click",".updateImageStatus",function(){
     var status=$(this).text();
     var image_id =$(this).attr("image_id");
     $.ajax({

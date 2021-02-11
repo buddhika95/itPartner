@@ -78,7 +78,7 @@ class ProductController extends Controller
                 $rules = [
                 'category_id'=>'required',
                 'brand_id'=>'required',
-                'product_name'=>'required|regex:/^[\pL\s\-]+$/u',
+                'product_name'=>'required',
                 'product_code'=>'required|regex:/^[\w-]*$/',
                 'product_price'=>'required|numeric',
                 'product_color'=>'required|regex:/^[\pL\s\-]+$/u',
@@ -88,7 +88,6 @@ class ProductController extends Controller
                 $customMessages=[
                     'category_id.required'=>'category is required',
                     'product_name.required'=>'Product Name is required',
-                    'product_name.regex'=>'Valid Product Name is required',
                     'product_code.required'=>'Product Code is required',
                     'product_code.regex'=>'Valid Product Codeis required',
                     'product_price.required'=>'Product price is required',
@@ -174,6 +173,8 @@ class ProductController extends Controller
                 $product->meta_keywords =$data['meta_keywords'];
                 if(!empty($data['is_featured'])){
                     $product->is_featured=$data['is_featured'];
+                }else{
+                    $product->is_featured="No";
                 }
 
 
