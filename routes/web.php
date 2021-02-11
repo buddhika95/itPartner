@@ -74,7 +74,7 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
 
 //front routes
 Route::namespace('Front')->group(function(){
-    Route::get('/','IndexController@Index');
+    Route::get('/','IndexController@index');
 
     });
 
