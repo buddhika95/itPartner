@@ -11,14 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//admin routes
 Route::prefix('/admin')->namespace('Admin')->group(function(){
  //all admin routes
 
@@ -70,6 +71,15 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
         Route::get('delete-image/{id}','ProductController@deleteImage');
     });
 });
+
+//front routes
+Route::namespace('Front')->group(function(){
+    Route::get('/','IndexController@Index');
+
+    });
+
+
+
 
 
 
