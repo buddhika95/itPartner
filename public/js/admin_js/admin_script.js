@@ -85,7 +85,7 @@ $(document).on("click",".updateBrandStatus",function(){
 //Append categories Level
 $('#section_id').change(function(){
     var section_id = $(this).val();
-    alert(section_id);
+    // alert(section_id);
     $.ajax({
         type:'post',
         url:'/admin/append-categories-level',

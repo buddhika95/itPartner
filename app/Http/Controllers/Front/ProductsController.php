@@ -16,7 +16,30 @@ class ProductsController extends Controller
             $categoryDetails = Category::catDetails($url);
             // echo "<pre>"; print_r($categoryDetails); die;
             $categoryProducts = Product::with('brand')->whereIn('category_id',$categoryDetails['catIds'])->
-            where('status',1)->get()->toArray();
+            where('status',1);
+
+            // if sort option selected by user
+            if(isset($_GET['sort']) && !empty($_GET['sort'])){
+                if($_GET['sort'] == "product_latest"){
+                    $categoryProducts->orderBy('id','Desc');
+                }
+                elseif($_GET['sort'] == "product_name_a_z"){
+                    $categoryProducts->orderBy('product_name','Asc');
+                }
+                elseif($_GET['sort'] == "product_name_z_a"){
+                    $categoryProducts->orderBy('product_name','Desc');
+                }
+                elseif($_GET['sort'] == "price_lowest"){
+                    $categoryProducts->orderBy('product_price','Asc');
+                }
+                elseif($_GET['sort'] == "price_highest"){
+                    $categoryProducts->orderBy('product_price','Desc');
+                }
+            }else{
+                $categoryProducts->orderBy('id','Desc');
+            }
+            $categoryProducts =$categoryProducts->paginate(6);
+
             // echo "<pre>"; print_r($categoryProducts); die;
             return view('front.products.listing')->with(compact('categoryDetails','categoryProducts'));
         }else{
