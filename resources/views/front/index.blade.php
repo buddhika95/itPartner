@@ -35,8 +35,8 @@
 
                     @endforeach
                 </div>
-                <a class="left carousel-control" href="#featured" data-slide="prev">‹</a>
-                <a class="right carousel-control" href="#featured" data-slide="next">›</a>
+                {{-- <a class="left carousel-control" href="#featured" data-slide="prev">‹</a>
+                <a class="right carousel-control" href="#featured" data-slide="next">›</a> --}}
             </div>
         </div>
     </div>
