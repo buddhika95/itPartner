@@ -22,20 +22,21 @@ class Category extends Model
         return $this->belongsTo('App\Category','parent_id')->select('id','category_name');
     }
 
-    public static function categoryDetails($url)
+    public static function catDetails($url)
     {
-        $categoryDetails = Category::select('id','category_name','url')->with(['subcategories'=>
-        function($query){
-            $query->select('id','parent_id')->where('status',1);
+        $catDetails = Category::select('id','category_name','url')->with(['subcategories'=>
+            function($query){
+                $query->select('id','parent_id')->where('status',1);
+
         }])->where('url',$url)->first()->toArray();
-        // dd($categoryDetails); die;
-        $catIds=array();
-        $catIds[]=$categoryDetails['id'];
-        foreach($categoryDetails['subcategories'] as $key =>$subcat ){
-            $catIDs = $subcat['id'];
+        // dd($catDetails);
+        $catIds = array();
+        $catIds[] =$catDetails['id'];
+        foreach ($catDetails['subcategories'] as $key => $subcat) {
+            $catIds[] = $subcat['id'];
         }
-        // dd($catIds);die;
-        return array('catIds'=>$catIds,'categoryDetails'=>$categoryDetails);
+        // dd($catIds); die;
+        return array('catIds'=>$catIds,'catDetails'=>$catDetails);
     }
 
 }
