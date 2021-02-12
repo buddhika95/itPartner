@@ -81,7 +81,14 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
 
 //front routes
 Route::namespace('Front')->group(function(){
+    //home page routes
     Route::get('/','IndexController@index');
+
+    //listing/categories routes
+    Route::get('/{url}','ProductsController@listing');
+    
+
+
 
     });
 
