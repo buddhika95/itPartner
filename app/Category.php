@@ -16,6 +16,9 @@ class Category extends Model
     {
         return $this->belongsTo('App\Section','section_id')->select('id','name');
     }
+
+
+
     // relation to get parent_id and name
     public function parentcategory()
     {
@@ -24,19 +27,29 @@ class Category extends Model
 
     public static function catDetails($url)
     {
-        $catDetails = Category::select('id','category_name','url')->with(['subcategories'=>
+        $catDetails = Category::select('id','parent_id','category_name','url','description')->with(['subcategories'=>
             function($query){
-                $query->select('id','parent_id')->where('status',1);
+                $query->select('id','parent_id','category_name','url','description')->where('status',1);
 
         }])->where('url',$url)->first()->toArray();
         // dd($catDetails);
+        if($catDetails['parent_id']==0){
+            //only show main category in breadcrumb
+            $breadcrumbs = '<a href="'.url($catDetails['url']).'">'.$catDetails['category_name'].'</a>';
+        }else{
+            //show main and sub category in breadcrumb
+            $parentcategory = Category::select('category_name','url')->where('id',$catDetails['parent_id'])->first()->toArray();
+            $breadcrumbs = '<a href="'.url($parentcategory['url']).'">'.$parentcategory['category_name'].'</a>&nbsp; <span class="divider">/ &nbsp;<a href="'.url($catDetails['url']).'">'.$catDetails['category_name'].'</a>';
+        }
+
         $catIds = array();
         $catIds[] =$catDetails['id'];
+
         foreach ($catDetails['subcategories'] as $key => $subcat) {
             $catIds[] = $subcat['id'];
         }
         // dd($catIds); die;
-        return array('catIds'=>$catIds,'catDetails'=>$catDetails);
+        return array('catIds'=>$catIds,'catDetails'=>$catDetails,'breadcrumbs'=>$breadcrumbs);
     }
 
 }
