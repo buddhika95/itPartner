@@ -81,29 +81,28 @@ Route::prefix('/admin')->namespace('Admin')->group(function(){
     });
 });
 
+
+
 //front routes
 Route::namespace('Front')->group(function(){
     //home page routes
     Route::get('/','IndexController@index');
 
 
-    //listing/categories routes
-    // Route::get('/{url}','ProductsController@listing');
 
+    //listing/categories routes
     //Get Category URLs
     $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
-
     foreach ($catUrls as $url) {
         Route::get('/'.$url,'ProductsController@listing');
     }
-
-
-    Route::get('/contact-us',function(){
-        echo "test"; die;
-    });
-
+    //product detail routes
+    Route::get('/product/{code}/{id}','ProductsController@detail');
 
     });
+
+
+
 
 
 
