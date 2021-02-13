@@ -30,7 +30,6 @@
                 <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
                 -->
             </div>
-
             <div class="btn-toolbar">
                 <div class="btn-group">
                     <span class="btn"><i class="icon-envelope"></i></span>
@@ -43,17 +42,18 @@
             </div>
         </div>
         <div class="span6">
-            <h3>Blue Casual Polo T-Shirt  </h3>
-            <small>- Brand Name</small>
+            <h3>{{ $productDetails['product_name'] }} </h3>
+            <small>- {{ $productDetails['brand']['name'] }}</small>
             <hr class="soft"/>
             <small>100 items in stock</small>
             <form class="form-horizontal qtyFrm">
                 <div class="control-group">
-                    <h4>Rs.1000</h4>
+                    <h4>Rs:{{ $productDetails['product_price'] }}.00</h4>
                         <select class="span2 pull-left">
-                            <option>Small</option>
-                            <option>Medium</option>
-                            <option>Large</option>
+                            <option selected>Select Warrenty Type</option>
+                            @foreach($productDetails['attributes'] as $attribute)
+                                <option>{{$attribute['type']}}</option>
+                            @endforeach
                         </select>
                         <input type="number" class="span1" placeholder="Qty."/>
                         <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
@@ -63,8 +63,7 @@
 
             <hr class="soft clr"/>
             <p class="span6">
-                Our Blue Casual Polo T-Shirt has a simple yet sophisticated design which makes it perfect for all outings, starting from regular morning jogs to casual outings and night walks. Coming to the functionality part, it’s antimicrobial, breathable and moisture-wicking features make it an essential wardrobe staple!
-
+                {{ $productDetails['description'] }}
             </p>
             <a class="btn btn-small pull-right" href="#detail">More Details</a>
             <br class="clr"/>
@@ -83,19 +82,31 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr class="techSpecRow"><th colspan="2">Product Details</th></tr>
-                            <tr class="techSpecRow"><td class="techSpecTD1">Brand: </td><td class="techSpecTD2">Gap Premium</td></tr>
-                            <tr class="techSpecRow"><td class="techSpecTD1">Code:</td><td class="techSpecTD2">BCT001</td></tr>
-                            <tr class="techSpecRow"><td class="techSpecTD1">Color:</td><td class="techSpecTD2">Blue</td></tr>
-                            <tr class="techSpecRow"><td class="techSpecTD1">Fabric:</td><td class="techSpecTD2">Cotton</td></tr>
-                            <tr class="techSpecRow"><td class="techSpecTD1">Pattern:</td><td class="techSpecTD2">Plain</td></tr>
+
+                            <tr class="techSpecRow"><td class="techSpecTD1">Brand: </td><td class="techSpecTD2">{{ $productDetails['brand']['name'] }}</td></tr>
+
+                            <tr class="techSpecRow"><td class="techSpecTD1">Code:</td><td class="techSpecTD2">{{ $productDetails['product_code']}}</td></tr>
+                            @if(!empty($productDetails['product_color']))
+                            <tr class="techSpecRow"><td class="techSpecTD1">Color:</td><td class="techSpecTD2">{{ $productDetails['product_color']}}</td></tr>
+                            @endif
+                            @if(!empty($productDetails['quality']))
+                            <tr class="techSpecRow"><td class="techSpecTD1">Quality:</td><td class="techSpecTD2">{{ $productDetails['quality']}}</td></tr>
+                            @endif
+                            @if(!empty($productDetails['warrenty']))
+                            <tr class="techSpecRow"><td class="techSpecTD1">Warrenty:</td><td class="techSpecTD2">{{ $productDetails['warrenty']}}</td></tr>
+                            @endif
+
+                            @if(!empty($productDetails['freeitem']))
+                            <tr class="techSpecRow"><td class="techSpecTD1">Free Items:</td><td class="techSpecTD2">{{ $productDetails['freeitem']}}</td></tr>
+                            @endif
                         </tbody>
                     </table>
 
-                    <h5>Washcare</h5>
-                    <p>Machine Wash</p>
-                    <h5>Disclaimer</h5>
+                    <h5>Best Products in the Sri Lanka</h5>
+                    <p>100% Guranteed </p>
+                    <h5>Best After Service</h5>
                     <p>
-                        There may be a slight color variation between the image shown and original product.
+                        Friendly after service for the all the products sold by us.
                     </p>
                 </div>
                 <div class="tab-pane fade" id="profile">

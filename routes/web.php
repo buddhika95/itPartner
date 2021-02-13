@@ -97,7 +97,7 @@ Route::namespace('Front')->group(function(){
         Route::get('/'.$url,'ProductsController@listing');
     }
     //product detail routes
-    Route::get('/product/{code}/{id}','ProductsController@detail');
+    Route::get('/product/{id}','ProductsController@detail');
 
     });
 
