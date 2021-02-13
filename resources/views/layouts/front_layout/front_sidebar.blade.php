@@ -28,7 +28,7 @@ $sections = Section::sections();
         <div class="well well-small">
             <h5>Quality</h5>
             @foreach($qualityArray as $quality)
-                <input style="margin-top: -2px" type="checkbox" name="quality[]" id="{{ $quality }}" value="{{ $quality }}">
+                <input class="quality" style="margin-top: -2px" type="checkbox" name="quality[]" id="{{ $quality }}" value="{{ $quality }}">
                &nbsp; {{ $quality }}<br>
             @endforeach
         </div>
@@ -36,7 +36,7 @@ $sections = Section::sections();
         <div class="well well-small">
             <h5>Warrenty</h5>
             @foreach($warrentyArray as $warrenty)
-                <input style="margin-top: -2px" type="checkbox" name="warrenty[]" id="{{ $warrenty }}" value="{{ $warrenty }}">
+                <input class="warrenty" style="margin-top: -2px" type="checkbox" name="warrenty[]" id="{{ $warrenty }}" value="{{ $warrenty }}">
                &nbsp; {{ $warrenty }}<br>
             @endforeach
         </div>
@@ -44,7 +44,7 @@ $sections = Section::sections();
         <div class="well well-small">
             <h5>Free Items</h5>
             @foreach($freeItemArray as $freeitem)
-                <input style="margin-top: -2px" type="checkbox" name="freeitem[]" id="{{ $freeitem }}" value="{{ $freeitem }}">
+                <input class="freeitem" style="margin-top: -2px" type="checkbox" name="freeitem[]" id="{{ $freeitem }}" value="{{ $freeitem }}">
                &nbsp; {{ $freeitem }}<br>
             @endforeach
         </div>

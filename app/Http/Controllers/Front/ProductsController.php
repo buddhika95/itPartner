@@ -23,6 +23,15 @@ class ProductsController extends Controller
                 $categoryProducts = Product::with('brand')->whereIn('category_id',$categoryDetails['catIds'])->
                 where('status',1);
 
+                //if quality filter is selected
+                if(isset($data['quality']) && !empty($data['quality'])){
+                    $categoryProducts->whereIn('products.quality',$data['quality']);
+
+                }
+
+
+
+
                 // if sort option selected by user
                 if(isset($data['sort']) && !empty($data['sort'])){
                     if($data['sort'] == "product_latest"){
