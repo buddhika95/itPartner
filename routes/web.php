@@ -15,6 +15,8 @@
 //     return view('welcome');
 // });
 
+use App\Category;
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -84,10 +86,21 @@ Route::namespace('Front')->group(function(){
     //home page routes
     Route::get('/','IndexController@index');
 
-    //listing/categories routes
-    Route::get('/{url}','ProductsController@listing');
-    
 
+    //listing/categories routes
+    // Route::get('/{url}','ProductsController@listing');
+
+    //Get Category URLs
+    $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
+
+    foreach ($catUrls as $url) {
+        Route::get('/'.$url,'ProductsController@listing');
+    }
+
+
+    Route::get('/contact-us',function(){
+        echo "test"; die;
+    });
 
 
     });
