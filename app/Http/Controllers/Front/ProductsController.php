@@ -26,8 +26,18 @@ class ProductsController extends Controller
                 //if quality filter is selected
                 if(isset($data['quality']) && !empty($data['quality'])){
                     $categoryProducts->whereIn('products.quality',$data['quality']);
-
                 }
+
+                //if Warrenty filter is selected
+                if(isset($data['warrenty']) && !empty($data['warrenty'])){
+                    $categoryProducts->whereIn('products.warrenty',$data['warrenty']);
+                }
+
+                //if Warrenty filter is selected
+                if(isset($data['freeitem']) && !empty($data['freeitem'])){
+                    $categoryProducts->whereIn('products.freeitem',$data['freeitem']);
+                }
+
 
 
 

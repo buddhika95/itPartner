@@ -45,7 +45,7 @@
                              <?php $product_image_path = ''; ?>
                         @endif
                                         @if(!empty($product['main_image']) && file_exists($product_image_path))
-                                            <img  src="{{ asset($product_image_path)}}" alt="">
+                                            <img src="{{ asset($product_image_path)}}" alt="">
                                         @else
                                         <img  src="{{ asset('images/product_images/small/no-image.jpg')}}" alt="">
                                         @endif

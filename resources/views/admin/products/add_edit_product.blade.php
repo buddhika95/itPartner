@@ -200,7 +200,7 @@
                     </div>
                     <div class="form-group">
                         <label>Select Free Item</label>
-                        <select name="warrenty" id="warrenty" class="form-control select2" style="width: 100%;">
+                        <select name="freeitem" id="freeitem" class="form-control select2" style="width: 100%;">
                           <option value="">Select</option>
                           @foreach ($freeItemArray as $freeitem)
                             <option value="{{ $freeitem }}" @if(!empty($productdata['freeitem']) && $productdata['freeitem']==$freeitem ) selected="" @endif>{{ $freeitem }}</option>
