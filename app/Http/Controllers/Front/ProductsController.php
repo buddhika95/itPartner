@@ -12,8 +12,9 @@ class ProductsController extends Controller
     public function listing($url,Request $request){
         if($request->ajax()){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
-        }else{
+            // echo "<pre>"; print_r($data); die;
+            $url = $data['url'];
+
             $categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
             if($categoryCount>0){
 
@@ -23,20 +24,20 @@ class ProductsController extends Controller
                 where('status',1);
 
                 // if sort option selected by user
-                if(isset($_GET['sort']) && !empty($_GET['sort'])){
-                    if($_GET['sort'] == "product_latest"){
+                if(isset($data['sort']) && !empty($data['sort'])){
+                    if($data['sort'] == "product_latest"){
                         $categoryProducts->orderBy('id','Desc');
                     }
-                    elseif($_GET['sort'] == "product_name_a_z"){
+                    elseif($data['sort'] == "product_name_a_z"){
                         $categoryProducts->orderBy('product_name','Asc');
                     }
-                    elseif($_GET['sort'] == "product_name_z_a"){
+                    elseif($data['sort'] == "product_name_z_a"){
                         $categoryProducts->orderBy('product_name','Desc');
                     }
-                    elseif($_GET['sort'] == "price_lowest"){
+                    elseif($data['sort'] == "price_lowest"){
                         $categoryProducts->orderBy('product_price','Asc');
                     }
-                    elseif($_GET['sort'] == "price_highest"){
+                    elseif($data['sort'] == "price_highest"){
                         $categoryProducts->orderBy('product_price','Desc');
                     }
                 }else{
@@ -44,6 +45,22 @@ class ProductsController extends Controller
                 }
                 $categoryProducts =$categoryProducts->paginate(12);
 
+                // echo "<pre>"; print_r($categoryProducts); die;
+                return view('front.products.ajax_products_listing')->with(compact('categoryDetails','categoryProducts','url'));
+            }else{
+
+                abort(404);
+            }
+
+        }else{
+            $categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
+            if($categoryCount>0){
+
+                $categoryDetails = Category::catDetails($url);
+                // echo "<pre>"; print_r($categoryDetails); die;
+                $categoryProducts = Product::with('brand')->whereIn('category_id',$categoryDetails['catIds'])->
+                where('status',1);
+                $categoryProducts =$categoryProducts->paginate(12);
                 // echo "<pre>"; print_r($categoryProducts); die;
                 return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','url'));
             }else{
