@@ -23,7 +23,35 @@ $sections = Section::sections();
             @endif
         @endforeach
     </ul>
+<br>
+    @if(isset($page_name) && $page_name=="listing")
+        <div class="well well-small">
+            <h5>Quality</h5>
+            @foreach($qualityArray as $quality)
+                <input style="margin-top: -2px" type="checkbox" name="quality[]" id="{{ $quality }}" value="{{ $quality }}">
+               &nbsp; {{ $quality }}<br>
+            @endforeach
+        </div>
+
+        <div class="well well-small">
+            <h5>Warrenty</h5>
+            @foreach($warrentyArray as $warrenty)
+                <input style="margin-top: -2px" type="checkbox" name="warrenty[]" id="{{ $warrenty }}" value="{{ $warrenty }}">
+               &nbsp; {{ $warrenty }}<br>
+            @endforeach
+        </div>
+
+        <div class="well well-small">
+            <h5>Free Items</h5>
+            @foreach($freeItemArray as $freeitem)
+                <input style="margin-top: -2px" type="checkbox" name="freeitem[]" id="{{ $freeitem }}" value="{{ $freeitem }}">
+               &nbsp; {{ $freeitem }}<br>
+            @endforeach
+        </div>
+    @endif
+
     <br/>
+
     <div class="thumbnail">
         <img src="{{ asset('images/front_images/payment_methods.png')}}" title="Payment Methods" alt="Payments Methods">
         <div class="caption">

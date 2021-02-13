@@ -189,10 +189,13 @@ class ProductController extends Controller
 
 
 
-        //filter Arrays
+        //Product filters
+        $productFilters = Product::productFilters();
+        $qualityArray = $productFilters['qualityArray'];
+        $warrentyArray = $productFilters['warrentyArray'];
+        $freeItemArray = $productFilters['freeItemArray'];
 
-        $qualityArray = array('Brandard','Grade A','Grade B');
-        $warrentyArray = array('6 Months','1 Year','3 Year');
+
 
         //Sections with categories and sub categories
         $categories = Section::with('categories')->get();
@@ -203,7 +206,7 @@ class ProductController extends Controller
         $brands = Brand::where('status',1)->get();
         $brands =json_decode(json_encode($brands),true);
 
-        return view('admin.products.add_edit_product')->with(compact('title','qualityArray','warrentyArray','categories','productdata','brands'));
+        return view('admin.products.add_edit_product')->with(compact('title','qualityArray','warrentyArray','freeItemArray','categories','productdata','brands'));
     }
 
     public function deleteProductImage($id)

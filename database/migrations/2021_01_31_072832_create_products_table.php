@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
             // $table->string('brand');
             $table->string('quality');
             $table->string('warrenty');
+            $table->string('freeitems');
             $table->string('meta_title');
             $table->string('meta_description');
             $table->string('meta_keywords');

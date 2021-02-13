@@ -62,7 +62,16 @@ class ProductsController extends Controller
                 where('status',1);
                 $categoryProducts =$categoryProducts->paginate(12);
                 // echo "<pre>"; print_r($categoryProducts); die;
-                return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','url'));
+
+                        //Product filters
+                $productFilters = Product::productFilters();
+                $qualityArray = $productFilters['qualityArray'];
+                $warrentyArray = $productFilters['warrentyArray'];
+                $freeItemArray = $productFilters['freeItemArray'];
+
+                $page_name="listing";
+
+                return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','url','qualityArray','warrentyArray','freeItemArray','page_name'));
             }else{
 
                 abort(404);

@@ -27,6 +27,14 @@ class Product extends Model
         return $this->hasMany('App\ProductsImage');
     }
 
+    public static function productFilters(){
+        //product filters
+       $productFilters['qualityArray'] = array('Brandard','Grade A','Replica');
+       $productFilters['warrentyArray'] = array('6 Months','1 Year','2 Years','3 Years');
+       $productFilters['freeItemArray'] = array('Free Items','Free Delivery');
+        return $productFilters;
+
+    }
 }
 
 
