@@ -13,6 +13,7 @@
     </p>
     <hr class="soft"/>
     <form name="sortProducts" id="sortProducts" class="form-horizontal span6">
+        <input type="hidden" name="url" id="url" value="{{$url }}">
         <div class="control-group">
             <label class="control-label alignL">Sort By </label>
             <select name="sort" id="sort">
@@ -26,12 +27,12 @@
         </div>
     </form>
 
-    <div id="myTab" class="pull-right">
+    {{-- <div id="myTab" class="pull-right">
         <a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
         <a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
-    </div>
+    </div> --}}
     <br class="clr"/>
-    <div class="tab-content">
+    <div class="tab-content filter_products" >
         <div class="tab-pane" id="listView">
             @foreach($categoryProducts as $product)
                 <div class="row">
@@ -75,36 +76,7 @@
                 <hr class="soft"/>
                 @endforeach
         </div>
-        <div class="tab-pane  active" id="blockView">
-            <ul class="thumbnails">
-                @foreach($categoryProducts as $product)
-                    <li class="span3">
-                        <div class="thumbnail">
-                            <a href="product_details.html">
-                                @if(isset($product['main_image']))
-                                    <?php $product_image_path = 'images/product_images/small/'.$product['main_image']; ?>
-                                @else
-                                <?php $product_image_path = ''; ?>
-                                @endif
-                                            @if(!empty($product['main_image']) && file_exists($product_image_path))
-                                                <img src="{{ asset($product_image_path)}}" alt="">
-                                            @else
-                                            <img src="{{ asset('images/product_images/small/no-image.jpg')}}" alt="">
-                                            @endif
-                            </a>
-                            <div class="caption">
-                                <h5>{{$product['product_name']}}</h5>
-                                <p>
-                                    {{-- {{$product['brand','name']}} --}}
-                                </p>
-                                <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{$product['product_price']}}</a></h4>
-                            </div>
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
-            <hr class="soft"/>
-        </div>
+        @include('front.products.ajax_products_listing')
     </div>
     <a href="compair.html" class="btn btn-large pull-right">Compare Product</a>
     <div class="pagination">
