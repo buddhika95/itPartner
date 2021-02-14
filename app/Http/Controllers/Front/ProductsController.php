@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 
 class ProductsController extends Controller
 {
@@ -157,8 +158,18 @@ class ProductsController extends Controller
             }
 
             //check product if already exist in cart
-            $countProducts = Cart::where(['product_id'=>$data['product_id'],'type'=>
-            $data['type']])->count();
+            if(Auth::check()){
+                //if user is logged in
+                $countProducts = Cart::where(['product_id'=>$data['product_id'],'type'=>
+                $data['type'],'user_id'=>Auth::user()->id ])->count();
+            }else{
+                //if user is not logged in
+                $countProducts = Cart::where(['product_id'=>$data['product_id'],'type'=>
+                $data['type'],'session_id'=>Session::get('session_id')])->count();
+
+            }
+
+
 
             if($countProducts>0){
                 $message= "Product Already Exists in the cart! ";
@@ -167,7 +178,6 @@ class ProductsController extends Controller
             }
 
             //save product in cart
-
             $cart =new cart;
             $cart->session_id= $session_id;
             $cart->product_id= $data['product_id'];
@@ -179,5 +189,11 @@ class ProductsController extends Controller
             $request->session()->flash('success_message', $message);
             return redirect()->back();
         }
+    }
+
+//cart view functions
+    public function cart()
+    {
+        return view('front.products.cart');
     }
 }

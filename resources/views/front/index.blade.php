@@ -18,9 +18,9 @@
                                     <a href="{{ url('product/'.$item['id'])  }}">
                                         <?php $product_image_path = 'images/product_images/small/'.$item['main_image']; ?>
                                         @if(!empty($item['main_image']) && file_exists($product_image_path))
-                                            <img src="{{ asset($product_image_path)}}" alt="">
+                                            <img style="width: 160px;" src="{{ asset($product_image_path)}}" alt="">
                                         @else
-                                        <img src="{{ asset('images/product_images/small/no-image.jpg')}}" alt="">
+                                        <img style="width: 160px;" src="{{ asset('images/product_images/small/no-image.jpg')}}" alt="">
                                         @endif
                                     </a>
                                     <div class="caption">
@@ -55,7 +55,7 @@
                     <div class="caption">
                         <h5>{{ $products['product_name'] }}</h5>
                         <p>
-                            {{ $products['product_color'] }}
+                            {{-- {{ $products['product_color'] }} --}}
                         </p>
 
                         <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.1000</a></h4>

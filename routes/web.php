@@ -88,8 +88,6 @@ Route::namespace('Front')->group(function(){
     //home page routes
     Route::get('/','IndexController@index');
 
-
-
     //listing/categories routes
     //Get Category URLs
     $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
@@ -105,7 +103,11 @@ Route::namespace('Front')->group(function(){
     //Add to Cart Route
     Route::post('/add-to-cart','ProductsController@addtocart');
 
-    });
+    //Shopping cart Route
+    Route::get('/cart','ProductsController@cart');
+
+
+});
 
 
 
