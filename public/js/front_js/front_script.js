@@ -2,6 +2,14 @@
 // $("#sort").on('change',function(){
 //     this.form.submit();
 
+// const { size } = require("lodash");
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 $("#sort").on('change',function(){
     var sort = $(this).val();
     var quality = get_filter("quality");
@@ -76,5 +84,28 @@ function get_filter(class_name){
         filter.push($(this).val());
     });
     return filter;
-}
+}//Sorting ends here
+
+
+$("#getPrice").change(function(){
+    // alert("test");
+    var type = $(this).val();
+    if(type==""){
+        alert("Please Select warrenty Type");
+        return false;
+    }
+    var product_id = $(this).attr("product-id");
+    $.ajax({
+        url:'/get-product-price',
+        data:{type:type,product_id:product_id},
+        type:'post',
+        success:function(resp){
+            // alert(resp);
+            $(".getAttrPrice").html("Rs. "+resp+".00");
+        },error:function(){
+            alert("Error");
+        }
+    });
+});
+
 
