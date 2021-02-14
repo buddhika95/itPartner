@@ -103,6 +103,7 @@ class ProductsController extends Controller
         }
     }
 
+//details page functions
     public function detail($id)
     {
         $productDetails = Product::with('category','brand','attributes','images')->find($id)->toArray();
@@ -124,4 +125,17 @@ class ProductsController extends Controller
 
         }
     }
+
+//Add to Cart functions
+//request for getting the data
+    public function addtocart(Request $request )
+    {
+        if($request->isMethod('post')){
+            $data = $request->all();
+            echo "<pre>"; print_r($data); die;
+        }
+    }
+
+
+
 }
