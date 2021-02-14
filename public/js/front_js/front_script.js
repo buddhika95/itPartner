@@ -100,8 +100,15 @@ $("#getPrice").change(function(){
         data:{type:type,product_id:product_id},
         type:'post',
         success:function(resp){
-            // alert(resp);
-            $(".getAttrPrice").html("Rs. "+resp+".00");
+            // alert(resp['product_price']);
+            // alert(resp['discounted_price']);
+            // return false;
+            if(resp['discounted_price']>0){
+                $(".getAttrPrice").html("<del>Rs. "+resp['product_price']+".00"+"</del> Rs. "+resp['discounted_price']+".00");
+            }else{
+                $(".getAttrPrice").html("Rs. "+resp['product_price']+".00");
+            }
+
         },error:function(){
             alert("Error");
         }
