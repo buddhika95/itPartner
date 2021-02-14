@@ -27,5 +27,10 @@ class Cart extends Model
     public function product(){
         return $this->belongsTo('App\Product','product_id');
     }
+    public static function getProductAttrPrice($product_id,$type){
+        $attrPrice = ProductsAttribute::select('price')->where(['product_id'=>$product_id,'type'
+        =>$type])->first()->toArray();
+        return $attrPrice['price'];
+    }
 
 }
