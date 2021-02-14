@@ -3,7 +3,7 @@
     @foreach($categoryProducts as $product)
             <li class="span3">
                 <div class="thumbnail">
-                    
+
 
                     <a href="{{ url('product/'.$product['id'])  }}">
 
