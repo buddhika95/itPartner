@@ -35,6 +35,26 @@ class Product extends Model
         return $productFilters;
 
     }
+
+    public static function getDiscountedPrice($product_id){
+        $proDetails= Product::select('product_price','product_discount','category_id')->where('id',$product_id)->first()->toArray();
+        // echo "<pre>"; print_r($proDetails);die;
+        $catDetails = Category::select('category_discount')->where('id',$proDetails['category_id'])->first()->toArray();
+
+        if($proDetails['product_discount']>0){
+           //if product discount is added from admin panel
+            $discounted_price=$proDetails['product_price'] - ($proDetails['product_price']*$proDetails['product_discount']/100);
+            //sale price = costprice-discountprice
+        }else if($catDetails['category_discount']>0){
+            //if product discount is not added  and category discount added from admin panel
+            $discounted_price= $proDetails['product_price']-($proDetails['product_price']*$catDetails['category_discount']/100);
+        }else{
+            $discounted_price=0;
+        }
+        return $discounted_price;
+    }
+
+
 }
 
 

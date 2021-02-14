@@ -1,3 +1,4 @@
+<?php use App\Product; ?>
 <div class="tab-pane  active" id="blockView">
     <ul class="thumbnails">
     @foreach($categoryProducts as $product)
@@ -21,12 +22,21 @@
                     <div class="caption">
                         <h5>{{$product['product_name']}}</h5>
                         <p>
-                            {{-- {{$product['brand','name']}} --}}
+
                         </p>
-                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.{{$product['product_price']}}</a></h4>
-                        <p>
-                            {{-- {{$product['freeitem']}} --}}
-                        </p>
+                        <?php $discounted_price = Product::getDiscountedPrice($product['id']); ?>
+
+                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">
+                            @if($discounted_price>0)
+                                <del>Rs.{{$product['product_price']}}</del>
+                            @else
+                                Rs.{{$product['product_price']}}
+                            @endif
+                        </a></h4>
+                        @if($discounted_price>0)
+                            <h4><font color="red"> Discounted Price: {{ $discounted_price }}</font></h4>
+                        @endif
+
                     </div>
                 </div>
             </li>
