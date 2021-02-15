@@ -28,7 +28,7 @@
                       <button class="btn btnItemUpdate qtyMinus" type="button" data-cartid="{{ $items['id'] }}"><i class="icon-minus"></i>
                       </button>
                       <button class="btn btnItemUpdate qtyPlus" type="button" data-cartid="{{ $items['id'] }}"><i class="icon-plus"></i>
-                      </button><button class="btn btn-danger" type="button">
+                      </button><button class="btn btn-danger btnItemDelete" type="button" data-cartid="{{ $items['id'] }}">
                           <i class="icon-remove icon-white"></i></button>
                   </div>
               </td>

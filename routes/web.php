@@ -109,7 +109,8 @@ Route::namespace('Front')->group(function(){
     //Update Cart Item qty
     Route::post('/update-cart-item-qty','ProductsController@updateCartItemQty');
 
-
+    //Delete Cart Item qty
+    Route::post('/delete-cart-item','ProductsController@deleteCartItem');
 
 });
 
