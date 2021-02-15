@@ -103,8 +103,8 @@ $("#getPrice").change(function(){
             // alert(resp['product_price']);
             // alert(resp['discounted_price']);
             // return false;
-            if(resp['discounted_price']>0){
-                $(".getAttrPrice").html("<del>Rs. "+resp['product_price']+".00"+"</del> Rs. "+resp['discounted_price']+".00");
+            if(resp['discount']>0){
+                $(".getAttrPrice").html("<del>Rs. "+resp['product_price']+".00"+"</del> Rs. "+resp['final_price']+".00");
             }else{
                 $(".getAttrPrice").html("Rs. "+resp['product_price']+".00");
             }

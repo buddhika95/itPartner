@@ -3,7 +3,7 @@
     <ul class="thumbnails">
     @foreach($categoryProducts as $product)
             <li class="span3">
-                <div class="thumbnail">
+                <div class="thumbnail" style="height: 400px;">
 
 
                     <a href="{{ url('product/'.$product['id'])  }}">
@@ -26,16 +26,19 @@
                         </p>
                         <?php $discounted_price = Product::getDiscountedPrice($product['id']); ?>
 
-                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">
+                        <h4 style="text-align:center">
+                            {{-- <a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> --}}
+                            <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">
                             @if($discounted_price>0)
                                 <del>Rs.{{$product['product_price']}}</del>
+                                <font color="yellow"> Rs.{{ $discounted_price }}</font>
                             @else
                                 Rs.{{$product['product_price']}}
                             @endif
                         </a></h4>
-                        @if($discounted_price>0)
+                        {{-- @if($discounted_price>0)
                             <h4><font color="red"> Discounted Price: {{ $discounted_price }}</font></h4>
-                        @endif
+                        @endif --}}
 
                     </div>
                 </div>

@@ -1,3 +1,4 @@
+<?php use App\Product; ?>
 <?php use App\Cart; ?>
 @extends('layouts.front_layout.front_layout')
 @section('content')
@@ -39,6 +40,23 @@
 		  </td>
 		  </tr>
 	</table>
+    @if(Session::has('success_message'))
+    <div class="alert alert-success" role="alert" >
+    {{ Session::get('success_message') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+@endif
+
+@if(Session::has('error_message'))
+    <div class="alert alert-danger " role="alert">
+    {{ Session::get('error_message') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+@endif
 
 	<table class="table table-bordered">
               <thead>
@@ -46,15 +64,15 @@
                   <th>Product</th>
                   <th colspan="2">Description</th>
                   <th>Quantity/Update</th>
-				  <th>Unit Price</th>
-                  <th>Discount</th>
+				  <th>MRP Price</th>
+                  <th>Category/Product<br> Discount</th>
                   <th>Sub Total</th>
 				</tr>
               </thead>
               <tbody>
                 <?php $total_price=0; ?>
                 @foreach($userCartItems as$items)
-                <?php $attrPrice = Cart::getProductAttrPrice($items['product_id'],$items['type']); ?>
+                <?php $attrPrice = Product::getDiscountedAttrPrice($items['product_id'],$items['type']); ?>
                     <tr>
                         <td colspan="2"> <img width="60" src="{{ asset('images/product_images/small/'.$items['product']['main_image']) }}" alt=""/></td>
                         <td>
@@ -73,21 +91,21 @@
                                     <i class="icon-remove icon-white"></i></button>
                             </div>
                         </td>
-                        <td>{{$attrPrice }}</td>
-                        <td>Rs.0.00</td>
+                        <td>{{$attrPrice['product_price'] }}</td>
+                        <td>Rs.{{$attrPrice['discount'] }}</td>
 
-                        <td>{{$attrPrice* $items['quantity']}}</td>
+                        <td>{{$attrPrice['final_price']* $items['quantity']}}</td>
                     </tr>
-                    <?php $total_price=$total_price+ ($attrPrice* $items['quantity']); ?>
+                    <?php $total_price=$total_price+ ($attrPrice['final_price']* $items['quantity']); ?>
                 @endforeach
 
 
                 <tr>
-                  <td colspan="6" style="text-align:right">Total Price:	</td>
+                  <td colspan="6" style="text-align:right">Sub Total:	</td>
                   <td> Rs.{{$total_price}}</td>
                 </tr>
 				 <tr>
-                  <td colspan="6" style="text-align:right">Total Discount:	</td>
+                  <td colspan="6" style="text-align:right">Voucher Discount:	</td>
                   <td> Rs.0.00</td>
                 </tr>
 

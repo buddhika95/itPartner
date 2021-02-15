@@ -191,7 +191,7 @@ class ProductsController extends Controller
 
             $message= " Product has been added in Cart!";
             $request->session()->flash('success_message', $message);
-            return redirect()->back();
+            return redirect('cart');;
         }
     }
 

@@ -1,3 +1,4 @@
+<?php use App\Product; ?>
 @extends('layouts.front_layout.front_layout')
 @section('content')
 
@@ -13,7 +14,7 @@
                         <ul class="thumbnails">
                             @foreach($featuredItem as $item)
                             <li class="span3">
-                                <div class="thumbnail">
+                                <div class="thumbnail" style="height: 290px;" >
                                     <i class="tag"></i>
                                     <a href="{{ url('product/'.$item['id'])  }}">
                                         <?php $product_image_path = 'images/product_images/small/'.$item['main_image']; ?>
@@ -25,7 +26,22 @@
                                     </a>
                                     <div class="caption">
                                         <h5>{{ $item['product_name']}}</h5>
-                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">Rs.{{ $item['product_price']}}</span></h4>
+                                        <?php $discounted_price = Product::getDiscountedPrice($item['id']); ?>
+                                        <h5><a class="btn" href="product_details.html">VIEW</a><br>
+                                            <span class="pull-center" style="font-size: 14px;">
+                                                @if($discounted_price>0)
+                                                    <del>Rs.{{ $item['product_price']}}</del>
+                                                    <font color="red">Rs. {{ $discounted_price }}</font>
+                                                @else
+                                                    Rs.{{ $item['product_price']}}
+
+
+                                                @endif
+
+
+                                            </span></h5>
+
+
                                     </div>
                                 </div>
                             </li>
@@ -44,7 +60,7 @@
     <ul class="thumbnails">
         @foreach($newProducts as $products)
             <li class="span3">
-                <div class="thumbnail">
+                <div class="thumbnail" style="height: 286px;">
                     <a  href="{{ url('product/'.$products['id'])  }}"><?php $product_image_path = 'images/product_images/small/'.$products['main_image']; ?>
                         @if(!empty($products['main_image']) && file_exists($product_image_path))
                             <img style="width: 160px;" src="{{ asset($product_image_path)}}" alt="">
@@ -57,8 +73,23 @@
                         <p>
                             {{-- {{ $products['product_color'] }} --}}
                         </p>
+                        <?php $discounted_price = Product::getDiscountedPrice($products['id']); ?>
 
-                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Rs.1000</a></h4>
+                        <h4 style="text-align:center">
+                            {{-- <a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a>--}}
+                            <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a>
+                            <a class="btn btn-primary" href="#">
+                                @if($discounted_price>0)
+                                  <del> Rs.{{ $products['product_price'] }}</del>
+                                  <font color="yellow">Rs.{{ $discounted_price }}</font>
+                                @else
+                                    {{ $products['product_price'] }}
+                                @endif
+                            </a></h4>
+                        {{-- @if($discounted_price>0)
+                            <h5><font color="red"> Discounted Price:Rs. {{ $discounted_price }}</font></h5>
+                        @endif --}}
+
                     </div>
                 </div>
             </li>
