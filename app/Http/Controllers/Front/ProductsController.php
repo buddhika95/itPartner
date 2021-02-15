@@ -209,9 +209,42 @@ class ProductsController extends Controller
     {
         if($request->ajax()){
             $data = $request->all();
+            // echo "<pre>"; print_r($data);die;
+
+            //get cart details
+            $cartDetails = Cart::find($data['cartid']);
+
+            //get Available Product Stock
+            $availableStock = ProductsAttribute::select('stock')->where(['product_id'=>$cartDetails['product_id'],'type'=>$cartDetails['type']])->first()->toArray();
+
+            //check Stock is available or not
+            if($data['qty']>$availableStock['stock']){
+                $userCartItems=Cart::userCartItems();
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'product Stock is not Available!',
+                    'view'=>(String)View::make('front.products.cart_items')->with(compact('userCartItems'))
+                ]);
+            }
+
+            //check Types Aailable
+            $availableType=ProductsAttribute::where(['product_id'=>$cartDetails['product_id'],'type'=>$cartDetails['type'],'status'=>1])->count();
+
+            if($availableType==0){
+                $userCartItems=Cart::userCartItems();
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'product Type is not Available!',
+                    'view'=>(String)View::make('front.products.cart_items')->with(compact('userCartItems'))
+                ]);
+            }
+
             Cart::where('id',$data['cartid'])->update(['quantity'=>$data['qty']]);
             $userCartItems=Cart::userCartItems();
-            return response()->json(['view'=>(String)View::make('front.products.cart_items')->with(compact('userCartItems'))]);
+            return response()->json([
+                'status'=>true,
+                'view'=>(String)View::make('front.products.cart_items')->with(compact('userCartItems'))
+                ]);
         }
     }
 
