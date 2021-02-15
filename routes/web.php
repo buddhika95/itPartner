@@ -112,6 +112,15 @@ Route::namespace('Front')->group(function(){
     //Delete Cart Item qty
     Route::post('/delete-cart-item','ProductsController@deleteCartItem');
 
+    //Login/Register users page
+    Route::get('/login-register','UsersController@loginRegister');
+
+    //login user route
+    Route::post('/login','UsersController@loginUser');
+
+    //Register user
+    Route::post('/register','UsersController@registerUser');
+
 });
 
 
