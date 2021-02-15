@@ -13,7 +13,7 @@
     <tbody>
       <?php $total_price=0; ?>
       @foreach($userCartItems as$items)
-      <?php $attrPrice = Product::getDiscountedAtt rPrice($items['product_id'],$items['type']); ?>
+      <?php $attrPrice = Product::getDiscountedAttrPrice($items['product_id'],$items['type']); ?>
           <tr>
               <td colspan="2"> <img width="60" src="{{ asset('images/product_images/small/'.$items['product']['main_image']) }}" alt=""/></td>
               <td>

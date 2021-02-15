@@ -12,6 +12,23 @@
 
 	<div class="row">
 		<div class="span4">
+            @if(Session::has('success_message'))
+            <div class="alert alert-success" role="alert" >
+            {{ Session::get('success_message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+        @endif
+
+        @if(Session::has('error_message'))
+            <div class="alert alert-danger " role="alert">
+            {{ Session::get('error_message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+        @endif
 			<div class="well">
 			<h5>CREATE YOUR ACCOUNT</h5><br/>
 			Enter your Details to create an account.<br/><br/>
