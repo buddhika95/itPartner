@@ -44,6 +44,19 @@ class UsersController extends Controller
        }
     }
 
+    public function checkEmail(Request $request)
+    {
+        //check if email already exists
+        $data = $request->all();
+        $emailCount = User::where('email',$data['email'])->count();
+        if($emailCount>0){
+            return "false";
+        }else{
+            return "true";
+        }
+    }
+
+
     public function logoutUser(){
         Auth::logout();
         return redirect('/');

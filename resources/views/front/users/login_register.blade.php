@@ -29,10 +29,11 @@
             </button>
             </div>
         @endif
+        
 			<div class="well">
 			<h5>CREATE YOUR ACCOUNT</h5><br/>
 			Enter your Details to create an account.<br/><br/>
-			<form action="{{ url('/register') }}" method="post">@csrf
+			<form id="registerForm" action="{{ url('/register') }}" method="post">@csrf
 			  <div class="control-group">
 				<label class="control-label" for="name">Name</label>
 				<div class="controls">

@@ -121,6 +121,12 @@ Route::namespace('Front')->group(function(){
     //Register user
     Route::post('/register','UsersController@registerUser');
 
+    //check email if exists
+    Route::match(['get', 'post'],'/check-email','UsersController@checkEmail');
+
+
+
+
     //logout user
     Route::get('/logout','UsersController@logoutUser');
 

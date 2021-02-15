@@ -172,4 +172,48 @@ $(document).on('click','.btnItemDelete',function(){
 
 });
 
+	// validate Register form on keyup and submit
+    $("#registerForm").validate({
+        rules: {
+            name: "required",
+            mobile: {
+                required: true,
+                minlength: 10,
+                maxlength: 10,
+                digits: true
+            },
+
+            email: {
+                required: true,
+                email: true,
+                remote:"check-email"
+            },
+            password: {
+                required: true,
+                minlength: 6
+            }
+        },
+
+        messages: {
+            name: "Please enter your name",
+
+            mobile: {
+                required: "Please enter a Mobile No",
+                minlength: "Your Mobile No must consist of at least 10 Digits",
+                maxlength: "Your Mobile No must consist of at least 10 Digits",
+                digits: "please enter a valid mobile no"
+            },
+            email: {
+                required:"Please enter a valid email address",
+                email:"Please enter a valid email address",
+                remote:"Email Already Exists Please try another Email"
+            },
+            password: {
+                required: "Please provide a password",
+                minlength: "Your password must be at least 6 characters long"
+            },
+        }
+    });
+
+
 
