@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use Session;
+Use App\Cart;
 use Auth;
 
 class UsersController extends Controller
@@ -36,7 +37,15 @@ class UsersController extends Controller
                $user->save();
 
                if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
-                //    echo "<pre>"; print_r(Auth::user()); die;
+
+                    //update user carrt with user ID
+                    if(!empty(Session::get('session_id'))){
+                        $user_id=Auth::user()->id;
+                        $session_id = Session::get('session_id');
+                        Cart::where('session_id',$session_id)->update(['user_id'=>$user_id]);
+                    }
+
+
                 return redirect('cart');
                }
 
@@ -56,6 +65,28 @@ class UsersController extends Controller
         }
     }
 
+    public function loginUser(Request $request)
+    {
+       if($request->isMethod('post')){
+           $data = $request->all();
+        //    echo "<pre>"; print_r($data);die;
+           if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
+
+            //update user carrt with user ID
+            if(!empty(Session::get('session_id'))){
+                $user_id=Auth::user()->id;
+                $session_id = Session::get('session_id');
+                Cart::where('session_id',$session_id)->update(['user_id'=>$user_id]);
+            }
+
+            return redirect('/cart');
+           }else{
+               $message = "Invalid Username or Password";
+               $request->session()->flash('error_message', $message);
+               return redirect()->back();
+           }
+       }
+    }
 
     public function logoutUser(){
         Auth::logout();

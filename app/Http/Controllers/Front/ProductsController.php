@@ -182,9 +182,16 @@ class ProductsController extends Controller
                 return redirect()->back();
             }
 
+            if(Auth::check()){
+                $user_id=Auth::user()->id;
+            }else{
+                $user_id=0;
+            }
+
             //save product in cart
             $cart =new cart;
             $cart->session_id= $session_id;
+            $cart->user_id= $user_id;
             $cart->product_id= $data['product_id'];
             $cart->type= $data['type'];
             $cart->quantity= $data['quantity'];
@@ -256,7 +263,7 @@ class ProductsController extends Controller
             Cart::where('id',$data['cartid'])->delete();
             $userCartItems=Cart::userCartItems();
             return response()->json([
-               
+
                 'view'=>(String)View::make('front.products.cart_items')->with(compact('userCartItems'))
                 ]);
 
