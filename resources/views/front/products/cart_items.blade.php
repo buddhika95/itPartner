@@ -5,7 +5,7 @@
         <th>Product</th>
         <th colspan="2">Description</th>
         <th>Quantity/Update</th>
-        <th>MRP Price</th>
+        <th>Unit Price</th>
         <th>Category/Product<br> Discount</th>
         <th>Sub Total</th>
       </tr>

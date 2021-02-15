@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Cart;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Illuminate\Pagination\Paginator;
 use App\Category;
 use App\Product;
@@ -202,4 +203,18 @@ class ProductsController extends Controller
         //  echo "<pre>"; print_r($userCartItems);die;
         return view('front.products.cart')->with(compact('userCartItems'));
     }
+
+
+    public function updateCartItemQty(Request $request)
+    {
+        if($request->ajax()){
+            $data = $request->all();
+            Cart::where('id',$data['cartid'])->update(['quantity'=>$data['qty']]);
+            $userCartItems=Cart::userCartItems();
+            return response()->json(['view'=>(String)View::make('front.products.cart_items')->with(compact('userCartItems'))]);
+        }
+    }
+
+
+
 }
