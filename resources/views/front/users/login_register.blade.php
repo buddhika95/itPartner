@@ -14,30 +14,30 @@
 		<div class="span4">
 			<div class="well">
 			<h5>CREATE YOUR ACCOUNT</h5><br/>
-			Enter your Name and e-mail to create an account.<br/><br/>
-			<form action="register.html">
+			Enter your Details to create an account.<br/><br/>
+			<form action="{{ url('/register') }}" method="post">@csrf
 			  <div class="control-group">
-				<label class="control-label" for="inputName0">Name</label>
+				<label class="control-label" for="name">Name</label>
 				<div class="controls">
-				  <input class="span3"  type="text" id="inputName0" placeholder="Enter Name">
+				  <input class="span3"  type="text" id="name" name="name" placeholder="Enter Name">
 				</div>
 			  </div>
               <div class="control-group">
-				<label class="control-label" for="inputMobile0">Mobile</label>
+				<label class="control-label" for="mobile">Mobile</label>
 				<div class="controls">
-				  <input class="span3"  type="text" id="inputMobile0" placeholder="Enter Mobile">
+				  <input class="span3"  type="text" id="mobile" name="mobile" placeholder="Enter Mobile">
 				</div>
 			  </div>
               <div class="control-group">
-				<label class="control-label" for="inputEmail0">E-mail address</label>
+				<label class="control-label" for="email">E-mail address</label>
 				<div class="controls">
-				  <input class="span3"  type="text" id="inputEmail0" placeholder="EnterEmail">
+				  <input class="span3"  type="email" id="email" name="email" placeholder="EnterEmail">
 				</div>
 			  </div>
               <div class="control-group">
 				<label class="control-label" for="inputPassword0">Password</label>
 				<div class="controls">
-				  <input class="span3"  type="text" id="inputPassword0" placeholder="Enter Password">
+				  <input class="span3"  type="password" id="password" name="password" placeholder="Enter Password">
 				</div>
 			  </div>
 			  <div class="controls">
